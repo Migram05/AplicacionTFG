@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BootScene.unity
     guid: b139e2eaa918d33479cf50aad26d3ee4
+  - enabled: 1
+    path: Assets/Scenes/Calendar.unity
+    guid: a8cd69d5bb8916847a917d7d1232c1d0
   m_configObjects: {}
