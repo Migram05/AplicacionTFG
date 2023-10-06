@@ -11,14 +11,19 @@ public class CalendarButtonCreator : MonoBehaviour
     {
         if (!buttonPrefab) return;
         GameObject each;
-        int index = 1, maxNum;
+        int index = 1, maxNum, startNum, currentDayNum = 1;
         maxNum = Manager.instance.getNumDaysInMonth();
+        startNum = Manager.instance.getFirstDay();
         foreach (Transform child in transform) //Recorremos los hijos y creamos botones para cada uno
         {
-            each = Instantiate<GameObject>(buttonPrefab, child);
-            each.gameObject.GetComponent<ButtonScript>().setNumber(index); //Ajustamos su número
-            if (index >= maxNum) break; //Cuando hayamos creado tantos días como hay en el mes, dejamos de crear
-            else ++index;
+            if(index >= startNum)
+            {
+                each = Instantiate<GameObject>(buttonPrefab, child);
+                each.gameObject.GetComponent<ButtonScript>().setNumber(currentDayNum); //Ajustamos su número
+                if (currentDayNum >= maxNum) break; //Cuando hayamos creado tantos días como hay en el mes, dejamos de crear
+                else currentDayNum++;
+            }
+            ++index;
         }
     }
 }
