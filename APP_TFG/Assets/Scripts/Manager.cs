@@ -14,6 +14,8 @@ public class Manager : MonoBehaviour
     private DateTime dateTime;
     public bool hasUser { get; private set; }
     private string numberToMonthName(int n) { switch (n) { case 1: return "Enero"; case 2: return "Febrero"; case 3: return "Marzo"; case 4: return "Abril"; case 5: return "Mayo"; case 6: return "Junio"; case 7: return "Julio"; case 8: return "Agosto"; case 9: return "Septiembre"; case 10: return "Octubre"; case 11: return "Noviembre"; case 12: return "Diciembre"; default: return "MesDesconocido"; } }
+
+    private string numberToDayName(int n) { switch (n) { case 1: return "Lunes"; case 2: return "Martes"; case 3: return "Miércoles"; case 4: return "Jueves"; case 5: return "Viernes"; case 6: return "Sábado"; case 0: return "Domingo"; default: return "DiaDesconocido"; } }
     public string getCurrentMonth() { return numberToMonthName(System.DateTime.Today.Month); }
 
     public string getCurrentYear() { return System.DateTime.Today.Year.ToString(); }
@@ -22,12 +24,15 @@ public class Manager : MonoBehaviour
 
     public int getCurrentDay() { return System.DateTime.Today.Day; }
 
+    public string getCurrentDayName() { return numberToDayName((int)System.DateTime.Today.DayOfWeek); }
+
     public int getFirstDay() {
         DayOfWeek primerDia = dateTime.DayOfWeek;
         int result = (int)primerDia;
         if (result == 0) result = 7; //Ajustamos el valor para que si es 0 es decir, domingo, sea considerado el séptimo día en realidad
         return result;
     }
+    
 
     private string username;
     public void setUserName(string newName) 
@@ -35,7 +40,7 @@ public class Manager : MonoBehaviour
         username = newName;
         StartCoroutine(LoadSceneDelayed(2, 1));
     }
-    IEnumerator LoadSceneDelayed(float time, int sceneNum)
+    public IEnumerator LoadSceneDelayed(float time, int sceneNum)
     {
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(sceneNum);
