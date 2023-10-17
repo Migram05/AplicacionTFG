@@ -19,7 +19,7 @@ public class InputFieldChanged : MonoBehaviour
         mainInputField.onEndEdit.AddListener(delegate { ValueChangeCheck(); });
     }
 
-    // Invoked when the value of the text field changes.
+    // Llamada cuando cambia el valor del input field.
     public void ValueChangeCheck()
     {
         mainInputField.enabled = false;//Desactivamos el input

@@ -16,13 +16,20 @@ public class Manager : MonoBehaviour
     private string numberToMonthName(int n) { switch (n) { case 1: return "Enero"; case 2: return "Febrero"; case 3: return "Marzo"; case 4: return "Abril"; case 5: return "Mayo"; case 6: return "Junio"; case 7: return "Julio"; case 8: return "Agosto"; case 9: return "Septiembre"; case 10: return "Octubre"; case 11: return "Noviembre"; case 12: return "Diciembre"; default: return "MesDesconocido"; } }
 
     private string numberToDayName(int n) { switch (n) { case 1: return "Lunes"; case 2: return "Martes"; case 3: return "Miércoles"; case 4: return "Jueves"; case 5: return "Viernes"; case 6: return "Sábado"; case 0: return "Domingo"; default: return "DiaDesconocido"; } }
-    public string getCurrentMonth() { return numberToMonthName(System.DateTime.Today.Month); }
+    
+    private int currentMonth;
+    public string getCurrentMonth() { return numberToMonthName(currentMonth); }
 
-    public string getCurrentYear() { return System.DateTime.Today.Year.ToString(); }
+    private int currentYear;
+    public string getCurrentYearString() { return currentYear.ToString(); }
 
-    public int getNumDaysInMonth() { return System.DateTime.DaysInMonth(System.DateTime.Today.Year, System.DateTime.Today.Month); }
+    public int getCurrentYear() { return currentYear; }
 
-    public int getCurrentDay() { return System.DateTime.Today.Day; }
+    private int numDaysInMonth;
+    public int getNumDaysInMonth() { return numDaysInMonth; }
+
+    private int currentDay;
+    public int getCurrentDay() { return currentDay; }
 
     public string getCurrentDayName() { return numberToDayName((int)System.DateTime.Today.DayOfWeek); }
 
@@ -56,6 +63,10 @@ public class Manager : MonoBehaviour
 
         // Crea un objeto DateTime para el primer día del mes.
         dateTime = new DateTime(System.DateTime.Today.Year, System.DateTime.Today.Month, 1);
+        currentDay = System.DateTime.Today.Day;
+        currentMonth = System.DateTime.Today.Month;
+        currentYear = System.DateTime.Today.Year;
+        numDaysInMonth = System.DateTime.DaysInMonth(currentYear, currentMonth);
     }
     // Start is called before the first frame update
     void Start()

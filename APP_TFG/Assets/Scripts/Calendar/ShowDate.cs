@@ -24,7 +24,7 @@ public class ShowDate : MonoBehaviour
             displayText += Manager.instance.getCurrentDay() + " ";
         }
         if (showMonth) displayText += Manager.instance.getCurrentMonth() + " ";
-        if (showYear) displayText += Manager.instance.getCurrentYear() + " ";
+        if (showYear) displayText += Manager.instance.getCurrentYearString() + " ";
         gameObject.GetComponentInChildren<TextMeshProUGUI>().text = displayText; //Ajusta el texto
     }
 
