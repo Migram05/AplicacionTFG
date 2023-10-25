@@ -21,4 +21,8 @@ public class ButtonDateCheck : MonoBehaviour
         }
         gameObject.GetComponent<Button>().interactable = cont;
     }
+    public void onClicked()
+    {
+        StartCoroutine(Manager.instance.LoadSceneDelayed(0,4));
+    }
 }

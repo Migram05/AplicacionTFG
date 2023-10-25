@@ -59,7 +59,7 @@ public class Manager : MonoBehaviour
         instance = this;
 
         hasUser = File.Exists("dataAPP.txt");
-        if(hasUser) { StartCoroutine(LoadSceneDelayed(2, 1)); } //Si el usuario ya está registrado, carga la escena
+        if(hasUser) { StartCoroutine(LoadSceneDelayed(0, 1)); } //Si el usuario ya está registrado, carga la escena
 
         // Crea un objeto DateTime para el primer día del mes.
         dateTime = new DateTime(System.DateTime.Today.Year, System.DateTime.Today.Month, 1);
