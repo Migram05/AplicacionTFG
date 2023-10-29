@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2708904217764794740}
   - component: {fileID: 8096850342233158132}
   - component: {fileID: 6553643746001937496}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 2476918239612327519}
   - component: {fileID: 8203484110648642731}
   - component: {fileID: 8324321993739152190}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 8552878032288964310}
   - component: {fileID: 593045795006170545}
   - component: {fileID: 6035947515363536649}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HourText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 5034065006676028024}
   - component: {fileID: 3715451372551175334}
   - component: {fileID: 2945360747633811312}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EmotionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +493,8 @@ GameObject:
   - component: {fileID: 1899319128306504787}
   - component: {fileID: 2251553751502766754}
   - component: {fileID: 7528959924696096441}
-  m_Layer: 0
+  - component: {fileID: 3436411155578545990}
+  m_Layer: 5
   m_Name: EmotionDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,6 +558,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3436411155578545990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7870864952579761035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c21d18002d3bd84e9fff20abb40c600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nombreActividad: {fileID: 2945360747633811312}
+  Allowedtag: Emotion
 --- !u!1 &7928683351610385197
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +583,8 @@ GameObject:
   - component: {fileID: 8361634365509899636}
   - component: {fileID: 7186972990262239517}
   - component: {fileID: 6644702164550179916}
-  m_Layer: 0
+  - component: {fileID: 8887210065545452283}
+  m_Layer: 5
   m_Name: ActivityDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,6 +648,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8887210065545452283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928683351610385197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c21d18002d3bd84e9fff20abb40c600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nombreActividad: {fileID: 5888052414125966205}
+  Allowedtag: Activity
 --- !u!1 &9135805758157401706
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +673,7 @@ GameObject:
   - component: {fileID: 6449928998889636066}
   - component: {fileID: 7820680192878826294}
   - component: {fileID: 5888052414125966205}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ActivityText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
