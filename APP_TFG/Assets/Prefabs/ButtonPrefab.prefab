@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2499606343159551566}
-  - component: {fileID: 6454819815642815955}
+  - component: {fileID: -6582661801363523254}
+  - component: {fileID: 6023412952329286949}
   m_Layer: 0
   m_Name: ButtonPrefab
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   - {fileID: 3602350783880416685}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6454819815642815955
+--- !u!114 &-6582661801363523254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +43,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3065231295425149155}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9658433e6a4694c9a8575f9fe40865, type: 3}
+  m_Script: {fileID: 11500000, guid: f2708437ec17d914199dbd3c5d9810b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6023412952329286949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3065231295425149155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3fbf4526d2f5a48bc491522798da43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayTime: 0
+  sceneNum: 3
 --- !u!1 &3222484357190874802
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +181,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6454819815642815955}
+      - m_Target: {fileID: 6023412952329286949}
         m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
         m_MethodName: onClicked
         m_Mode: 1

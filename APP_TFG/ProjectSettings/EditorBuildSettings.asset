@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DailyScene2.unity
     guid: 23cd2cb1e318a3846a20098c192bbdec
+  - enabled: 1
+    path: Assets/Scenes/DailyScene3.unity
+    guid: ca95bc3b66f32eb40bab79402ce2a893
+  - enabled: 1
+    path: Assets/Scenes/ExitScene.unity
+    guid: 68922e9f031ec8947bca742ca76247e7
   m_configObjects: {}

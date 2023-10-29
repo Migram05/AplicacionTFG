@@ -19,7 +19,7 @@ public class CalendarButtonCreator : MonoBehaviour
             if(index >= startNum)
             {
                 each = Instantiate<GameObject>(buttonPrefab, child);
-                each.gameObject.GetComponent<ButtonScript>().setNumber(currentDayNum); //Ajustamos su número
+                each.gameObject.GetComponent<DayPrefabScript>().setNumber(currentDayNum); //Ajustamos su número
                 if (currentDayNum >= maxNum) break; //Cuando hayamos creado tantos días como hay en el mes, dejamos de crear
                 else currentDayNum++;
             }
