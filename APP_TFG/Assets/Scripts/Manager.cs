@@ -6,18 +6,54 @@ using System;
 using UnityEngine.SceneManagement;
 using Unity.Mathematics;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Numerics;
+using Unity.VisualScripting;
 
 public class Manager : MonoBehaviour
 {
     public static Manager instance { get; private set; }
 
     //Information to save
+    string [] appData = new string[3];
     private string todayGoodThings;
     private string todayBadThings;
 
+    private string saveDataPath = "APP_SavedData/dataAPP.txt";
+
+    struct scheduleInformation
+    {
+        string actividad;
+        string emocion;
+    }
+    struct dayInformation
+    {
+        Vector<scheduleInformation> scheduleVector;
+        string goodText;
+        string badText;
+    }
+
+    private int[] dayVectorIndex = new int[31];
+    private Vector<dayInformation> dayInformationVector;
     public void setTodayGoodThings(string tGT) { todayGoodThings = tGT; }
     public void setTodayBadthings(string tBT) { todayGoodThings = tBT; }
 
+    private void saveInformation() 
+    {
+        appData[0] = username;
+        appData[1] = getCurrentMonth();
+        appData[2] = getCurrentYearString();
+        File.WriteAllLines(saveDataPath, appData);
+    }
+
+    private void loadInformation()
+    {
+
+    }
+
+    private void OnApplicationQuit()
+    {
+        saveInformation();
+    }
     //
 
     private DateTime dateTime;
@@ -66,10 +102,15 @@ public class Manager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
+        for (int e = 0; e < dayVectorIndex.Length; e++) dayVectorIndex[e] = -1;
 
-        hasUser = File.Exists("dataAPP.txt");
-        if(hasUser) { StartCoroutine(LoadSceneDelayed(0, 1)); } //Si el usuario ya está registrado, carga la escena
-
+        hasUser = File.Exists(saveDataPath);
+        if (hasUser)
+        {
+            loadInformation();
+            StartCoroutine(LoadSceneDelayed(0, 1)); //Si el usuario ya está registrado, carga la escena
+        }
+        else File.Create(saveDataPath);
         // Crea un objeto DateTime para el primer día del mes.
         dateTime = new DateTime(System.DateTime.Today.Year, System.DateTime.Today.Month, 1);
         currentDay = System.DateTime.Today.Day;
