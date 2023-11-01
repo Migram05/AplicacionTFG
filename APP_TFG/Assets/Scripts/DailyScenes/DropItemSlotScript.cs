@@ -7,13 +7,23 @@ using TMPro;
 public class DropItemSlotScript : MonoBehaviour, IDropHandler
 {
     [SerializeField]
-    private TextMeshProUGUI nombreActividad;
+    private TextMeshProUGUI texto;
     [SerializeField]
     private string Allowedtag;
+    [SerializeField] //Se usa para guardar la información como actividad o emocion
+    bool isActiviyDrop = false;
+    bool used = false;
 
+    public bool getIsActivityDrop() { return isActiviyDrop; }
+    public string getText()
+    {
+        string returnString = texto.text;
+        if (!used) returnString = "NADA";
+        return returnString;
+    }
     public void eraseActivityName()
     {
-        nombreActividad.text = "";
+        texto.text = " ";
     }
     public void OnDrop(PointerEventData eventData)
     {
@@ -28,8 +38,8 @@ public class DropItemSlotScript : MonoBehaviour, IDropHandler
             imagen.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
             imagen.GetComponent<Transform>().SetParent(this.GetComponent<Transform>());
             imagen.GetComponent<Transform>().position = this.GetComponent<Transform>().position;
-            nombreActividad.text = imagen.GetComponent<DragDropScript>().getNombre();
-
+            texto.text = imagen.GetComponent<DragDropScript>().getNombre();
+            used = true;
         }
     }
 }

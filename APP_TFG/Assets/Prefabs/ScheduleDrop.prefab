@@ -570,8 +570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c21d18002d3bd84e9fff20abb40c600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nombreActividad: {fileID: 2945360747633811312}
+  texto: {fileID: 2945360747633811312}
   Allowedtag: Emotion
+  isActiviyDrop: 0
 --- !u!1 &7928683351610385197
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,8 +661,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c21d18002d3bd84e9fff20abb40c600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nombreActividad: {fileID: 5888052414125966205}
+  texto: {fileID: 5888052414125966205}
   Allowedtag: Activity
+  isActiviyDrop: 1
 --- !u!1 &9135805758157401706
 GameObject:
   m_ObjectHideFlags: 0

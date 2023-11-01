@@ -9,7 +9,7 @@ public class PresentationSpeechBubble : MonoBehaviour
     void Start()
     {
         //Cambia el texto del inicio 
-        if (Manager.instance.hasUser) gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Hola usuario reconocido!";
+        if (Manager.instance.hasUser) gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "¡Hola " + Manager.instance.getUsername() + " !";
         else gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Hola creo que no nos conocemos ¿cómo te llamas?";
     }
 
