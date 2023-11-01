@@ -19,10 +19,14 @@ public class DayPrefabScript : MonoBehaviour
         buttonChild = canvasChild.transform.GetChild(0).gameObject;
         textChild = buttonChild.transform.GetChild(0).gameObject;
         textChild.GetComponent<TextMeshProUGUI>().text = number.ToString(); //Se ajusta el nombre del texto al número
-        if (Manager.instance.getCurrentDay() != number)
+        if (!Manager.instance.canInteractWithButton(number))
         {
             buttonChild.GetComponent<Image>().color = Color.gray; //Pone en gris los días que no sean el actual
             buttonChild.GetComponent<Button>().enabled = false;
+        }
+        else
+        {
+            if(Manager.instance.getCurrentDay() == number) buttonChild.GetComponent<Image>().color = Color.cyan; //El dia actual se marca con color cyan
         }
     }
 }

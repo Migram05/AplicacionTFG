@@ -23,46 +23,66 @@ public class Manager : MonoBehaviour
     private string saveDataPath = "APP_SavedData/dataAPP.txt";
      struct dayInformation
     {
+        public bool usable;
         public string[] actividades;
         public string[] emociones;
         public string goodText;
         public string badText;
     }
 
-    private int[] dayVectorIndex = new int[31];
-    private List<dayInformation> dayInformationList;
+    private List<dayInformation> dayInformationList = new List<dayInformation>(31);
     public void setTodayGoodThings(string tGT) { todayGoodThings = tGT; }
     public void setTodayBadthings(string tBT) { todayBadThings = tBT; }
 
     public void saveActivity(string name) { activitiesList.Add(name); }
 
     public void saveEmotion(string name) { emotionsList.Add(name); }
-    private void saveInformation() 
+
+    private void saveTodayInformation() //Guarda la información del día de hoy en la lista de de dias
+    {
+        dayInformation info = new dayInformation();
+        info.usable = true;
+        info.actividades = activitiesList.ToArray();
+        info.emociones = emotionsList.ToArray();
+        info.goodText = todayGoodThings;
+        info.badText = todayBadThings;
+        dayInformationList[getCurrentDay() - 1] = info;
+    }
+    private void saveInformation() //Escribe la información guardada en el archivo de guardado
     {
         StreamWriter writer = new StreamWriter(saveDataPath);
         writer.WriteLine(username);
         writer.WriteLine(getCurrentMonth());
         writer.WriteLine(getCurrentYearString());
-        writer.WriteLine(getCurrentDay());
-        string todayActivities ="";
-        for(int x = 0; x < activitiesList.Count; x++)
+        int dayNum = 1;
+        foreach(dayInformation day in dayInformationList)
         {
-            todayActivities += activitiesList[x] + " ";
+            if(day.usable)
+            {
+                writer.WriteLine(dayNum);
+                dayInformation info = day;
+                string todayActivities = "";
+                for (int x = 0; x < info.actividades.Length; x++)
+                {
+                    todayActivities += info.actividades[x] + " ";
+                }
+                writer.WriteLine(todayActivities);
+                string todayEmotions = "";
+                for (int x = 0; x < info.emociones.Length; x++)
+                {
+                    todayEmotions += info.emociones[x] + " ";
+                }
+                writer.WriteLine(todayEmotions);
+                writer.WriteLine(info.goodText);
+                writer.WriteLine(info.badText);
+            }
+            dayNum++;
         }
-        writer.WriteLine(todayActivities);
-        string todayEmotions = "";
-        for (int x = 0; x < emotionsList.Count; x++)
-        {
-            todayEmotions += emotionsList[x] + " ";
-        }
-        writer.WriteLine(todayEmotions);
-        writer.WriteLine(todayGoodThings);
-        writer.WriteLine(todayBadThings);
         writer.Close();
     }
     private string lastSavedMonth;
     private string lastSavedYear;
-    private void loadInformation()
+    private void loadInformation() //Carga la información guardada
     {
         StreamReader reader = new StreamReader(saveDataPath);
         username = reader.ReadLine();
@@ -71,23 +91,25 @@ public class Manager : MonoBehaviour
         if (lastSavedMonth == getCurrentMonth() && lastSavedYear == getCurrentYearString()) //Si el mes y año de último guardado y el actual son los mismos se carga la información
         {
             string readString = reader.ReadLine();
-            while(readString != null)
+            while (readString != null)
             {
                 int dayNum = 0;
                 if (Int32.TryParse(readString, out dayNum))
                 {
-                    Debug.Log(dayNum);
                     //Se ha leído correctamente el día
-                    dayVectorIndex[dayNum] = dayInformationList.Count;
-                    string[] activities = reader.ReadLine().Split(' ');
-                    string[] emotions = reader.ReadLine().Split(' ');
-                    dayInformation info;
+                    string lineRead = reader.ReadLine();
+                    string[] activities = lineRead.Split(' ');
+                    lineRead = reader.ReadLine();
+                    string[] emotions = lineRead.Split(' ');
+                    dayInformation info = new dayInformation();
+                    info.usable = true;
                     info.actividades = activities;
                     info.emociones = emotions;
                     info.goodText = reader.ReadLine();
                     info.badText = reader.ReadLine();
-                    dayInformationList.Add(info);
+                    dayInformationList[dayNum-1] = info;
                 }
+                readString = reader.ReadLine();
             }
         }
         else
@@ -126,6 +148,11 @@ public class Manager : MonoBehaviour
 
     public string getCurrentDayName() { return numberToDayName((int)System.DateTime.Today.DayOfWeek); }
 
+    public bool canInteractWithButton(int day) //Método que determina si se puede hacer click en un botón o no
+    {
+        return (day == currentDay || dayInformationList[day-1].usable == true);
+    }
+
     public int getFirstDay() {
         DayOfWeek primerDia = dateTime.DayOfWeek;
         int result = (int)primerDia;
@@ -147,7 +174,7 @@ public class Manager : MonoBehaviour
         //TEST
         if(sceneNum == 6)
         {
-            saveInformation();
+            saveTodayInformation();
             Debug.Log("Borrar lineas de prueba en el manager");
         }
         //
@@ -158,7 +185,12 @@ public class Manager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
-        for (int e = 0; e < dayVectorIndex.Length; e++) dayVectorIndex[e] = -1;
+        for(int i = 0; i < dayInformationList.Capacity; ++i) //Inicialización de la lista
+        {
+            dayInformation info = new dayInformation();
+            info.usable = false;
+            dayInformationList.Add(info);
+        }
         // Crea un objeto DateTime para el primer día del mes.
         dateTime = new DateTime(System.DateTime.Today.Year, System.DateTime.Today.Month, 1);
         currentDay = System.DateTime.Today.Day;
@@ -173,16 +205,5 @@ public class Manager : MonoBehaviour
             StartCoroutine(LoadSceneDelayed(0, 1)); //Si el usuario ya está registrado, carga la escena
         }
         else File.Create(saveDataPath);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
