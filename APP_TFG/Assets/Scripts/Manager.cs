@@ -120,11 +120,6 @@ public class Manager : MonoBehaviour
                 readString = reader.ReadLine();
             }
         }
-        else
-        {
-            //TO DO
-            //Borrar datos de guardado y mostrar resumen del mes
-        }
         reader.Close();
     }
 
@@ -174,22 +169,24 @@ public class Manager : MonoBehaviour
 
     private string username = "";
     public string getUsername() { return username; }
+
+    public void changeUserName(string newName)
+    {
+        username = newName;
+    }
     public void setUserName(string newName) 
     {
-        Debug.Log(newName);
         username = newName;
         StartCoroutine(LoadSceneDelayed(2, 1));
     }
     public IEnumerator LoadSceneDelayed(float time, int sceneNum)
     {
         yield return new WaitForSeconds(time);
-        //TEST
-        if(sceneNum == 6)
+        if(sceneNum == 6) //Si la escena es la última del día, guarda la información y devuelve al usuario al menú
         {
             saveTodayInformation();
-            Debug.Log("Borrar lineas de prueba en el manager");
+            StartCoroutine(LoadSceneDelayed(2, 7));
         }
-        //
         SceneManager.LoadScene(sceneNum);
     }
 
@@ -227,7 +224,7 @@ public class Manager : MonoBehaviour
         if (hasUser)
         {
             loadInformation();
-            StartCoroutine(LoadSceneDelayed(0, 1)); //Si el usuario ya está registrado, carga la escena
+            StartCoroutine(LoadSceneDelayed(0, 7)); //Si el usuario ya está registrado, carga la escena
         }
         else File.Create(saveDataPath);
     }
