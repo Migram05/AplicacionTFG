@@ -29,4 +29,8 @@ public class DayPrefabScript : MonoBehaviour
             if(Manager.instance.getCurrentDay() == number) buttonChild.GetComponent<Image>().color = Color.cyan; //El dia actual se marca con color cyan
         }
     }
+    public void clickedButton()
+    {
+        Manager.instance.callendarButtonClicked(buttonNumber);
+    }
 }

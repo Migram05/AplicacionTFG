@@ -38,6 +38,14 @@ public class Manager : MonoBehaviour
 
     public void saveEmotion(string name) { emotionsList.Add(name); }
 
+    public string getSavedGoodText() { return dayInformationList[selectedDay - 1].goodText; }
+
+    public string getSavedBadText() { return dayInformationList[selectedDay - 1].badText; }
+
+    public string[] getSavedActivities() { return dayInformationList[selectedDay-1].actividades; }
+
+    public string[] getSavedEmotions() { return dayInformationList[selectedDay - 1].emociones; }
+
     private void saveTodayInformation() //Guarda la información del día de hoy en la lista de de dias
     {
         dayInformation info = new dayInformation();
@@ -146,6 +154,10 @@ public class Manager : MonoBehaviour
     private int currentDay;
     public int getCurrentDay() { return currentDay; }
 
+    private int selectedDay;
+
+    public int getSelectedDay() { return selectedDay;}
+
     public string getCurrentDayName() { return numberToDayName((int)System.DateTime.Today.DayOfWeek); }
 
     public bool canInteractWithButton(int day) //Método que determina si se puede hacer click en un botón o no
@@ -179,6 +191,19 @@ public class Manager : MonoBehaviour
         }
         //
         SceneManager.LoadScene(sceneNum);
+    }
+
+    public void callendarButtonClicked(int num)
+    {
+        selectedDay = num;
+        if(num == currentDay) //Si el dia seleccionado es el actual, se activa la escena diaria
+        {
+            StartCoroutine(LoadSceneDelayed(0, 3));
+        }
+        else //Sino, se muestra un resumen del día
+        {
+            StartCoroutine(LoadSceneDelayed(0, 2));
+        }
     }
 
     void Awake()

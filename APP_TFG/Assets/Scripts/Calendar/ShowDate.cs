@@ -27,10 +27,4 @@ public class ShowDate : MonoBehaviour
         if (showYear) displayText += Manager.instance.getCurrentYearString() + " ";
         gameObject.GetComponentInChildren<TextMeshProUGUI>().text = displayText; //Ajusta el texto
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
