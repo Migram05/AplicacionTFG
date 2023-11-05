@@ -9,12 +9,12 @@ public class PresentationSpeechBubble : MonoBehaviour
     void Start()
     {
         //Cambia el texto del inicio 
-        if (Manager.instance.hasUser) gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "¡Hola " + Manager.instance.getUsername() + " !";
-        else gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Hola creo que no nos conocemos ¿cómo te llamas?";
+        if (Manager.instance.hasUser) gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "¡Hola, " + Manager.instance.getUsername() + "!";
+        else gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Hola, creo que no nos conocemos\n ¿Cómo te llamas?";
     }
 
-    public void nuevoUsuario(string nombre)
+    public void textoBurguja(string texto)
     {
-        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Hola " + nombre + " !";
+        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = texto;
     }
 }

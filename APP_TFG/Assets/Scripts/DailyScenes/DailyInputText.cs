@@ -19,10 +19,7 @@ public class DailyInputText : MonoBehaviour
 
     public void ValueChangeCheck()
     {
-        mainInputField.enabled = false;//Desactivamos el input
-        string processedInput = mainInputField.text.ToLower();
-        //Ajusta el texto para que esté la primera letra en mayúsculas y las demás en minúsculas
-        processedInput = char.ToUpper(processedInput[0]) + processedInput.Remove(0, 1);
+        string processedInput = mainInputField.text;
         if (isGoodText) Manager.instance.setTodayGoodThings(processedInput);
         else Manager.instance.setTodayBadthings(processedInput);
     }

@@ -18,11 +18,20 @@ public class ChangeNameInputField : MonoBehaviour
     // Llamada cuando cambia el valor del input field.
     public void ValueChangeCheck()
     {
-        mainInputField.enabled = false;//Desactivamos el input
+        
         string processedInput = mainInputField.text.ToLower();
+        processedInput = processedInput.Trim(); //Le quitamos los espacios del principio y el final
+        if (processedInput.Length == 0) //Comprobación de que el nombre no es vacío
+        {
+            mainInputField.text = "¡NOMBRE NO VÁLIDO!";
+            return;
+        }
+        mainInputField.enabled = false;//Desactivamos el input
         //Ajusta el nombre para que esté la primera letra en mayúsculas y las demás en minúsculas
         processedInput = char.ToUpper(processedInput[0]) + processedInput.Remove(0, 1);
         Manager.instance.changeUserName(processedInput); //Ajusta el nombre de usuario
         mainInputField.text = "¡NOMBRE CAMBIADO!";
+
+        
     }
 }

@@ -31,6 +31,8 @@ public class Manager : MonoBehaviour
     }
 
     private List<dayInformation> dayInformationList = new List<dayInformation>(31);
+
+    public bool todayInformationSaved() { return dayInformationList[currentDay - 1].usable; }
     public void setTodayGoodThings(string tGT) { todayGoodThings = tGT; }
     public void setTodayBadthings(string tBT) { todayBadThings = tBT; }
 
@@ -58,6 +60,11 @@ public class Manager : MonoBehaviour
     }
     private void saveInformation() //Escribe la información guardada en el archivo de guardado
     {
+        if (username.Length == 0) //No se guarda la información si no hay un nombre de usuario válido
+        {
+            File.Delete(saveDataPath);
+            return;
+        }
         StreamWriter writer = new StreamWriter(saveDataPath);
         writer.WriteLine(username);
         writer.WriteLine(getCurrentMonth());
@@ -177,7 +184,7 @@ public class Manager : MonoBehaviour
     public void setUserName(string newName) 
     {
         username = newName;
-        StartCoroutine(LoadSceneDelayed(2, 1));
+        StartCoroutine(LoadSceneDelayed(2, 7));
     }
     public IEnumerator LoadSceneDelayed(float time, int sceneNum)
     {
@@ -221,10 +228,10 @@ public class Manager : MonoBehaviour
         numDaysInMonth = System.DateTime.DaysInMonth(currentYear, currentMonth);
 
         hasUser = File.Exists(saveDataPath);
-        if (hasUser)
+        if (hasUser) //Carga la información
         {
             loadInformation();
-            StartCoroutine(LoadSceneDelayed(0, 7)); //Si el usuario ya está registrado, carga la escena
+            StartCoroutine(LoadSceneDelayed(2, 7)); //Si el usuario ya está registrado, carga la escena
         }
         else File.Create(saveDataPath);
     }

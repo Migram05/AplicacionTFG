@@ -26,7 +26,11 @@ public class DayPrefabScript : MonoBehaviour
         }
         else
         {
-            if(Manager.instance.getCurrentDay() == number) buttonChild.GetComponent<Image>().color = Color.cyan; //El dia actual se marca con color cyan
+            if(Manager.instance.getCurrentDay() == number)
+            {
+                if(Manager.instance.todayInformationSaved()) buttonChild.GetComponent<Image>().color = Color.green; //Si hay información guardada del día de hy se marca de color diferente
+                else buttonChild.GetComponent<Image>().color = Color.cyan; //El dia actual se marca con color cyan
+            }
         }
     }
     public void clickedButton()

@@ -17,7 +17,8 @@ public class InputDateCheck : MonoBehaviour
     {
         mainInputField = gameObject.GetComponentInChildren<TMP_InputField>();
         //Añade un callback para cuando se termina de editar el input field
-        mainInputField.onEndEdit.AddListener(delegate { ValueChangeCheck(); });
+        mainInputField.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+        //mainInputField.onEndEdit.AddListener(delegate { ValueChangeCheck(); });
     }
 
     // Llamada cuando cambia el valor del input field.
@@ -30,7 +31,8 @@ public class InputDateCheck : MonoBehaviour
                 correctInfo = (processedInput == Manager.instance.getCurrentDay().ToString());
                 break; 
             case check.inputMonthCheck:
-                correctInfo = (processedInput == Manager.instance.getCurrentMonth());
+                processedInput = processedInput.ToUpper();
+                correctInfo = ( processedInput == Manager.instance.getCurrentMonth().ToUpper());
                 break; 
             case check.inputYearCheck:
                 correctInfo = (processedInput == Manager.instance.getCurrentYearString());

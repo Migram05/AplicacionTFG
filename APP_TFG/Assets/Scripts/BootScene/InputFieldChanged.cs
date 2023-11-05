@@ -22,14 +22,26 @@ public class InputFieldChanged : MonoBehaviour
     // Llamada cuando cambia el valor del input field.
     public void ValueChangeCheck()
     {
-        mainInputField.enabled = false;//Desactivamos el input
         string processedInput = mainInputField.text.ToLower();
+        processedInput = processedInput.Trim(); //Le quitamos los espacios del principio y el final
+        if (processedInput.Length == 0) //Comprobación de que el nombre no es vacío
+        {
+            if (valueChangedText)
+            {
+                valueChangedText.GetComponent<PresentationSpeechBubble>().textoBurguja("Escribe un nombre válido");
+            }
+            return;
+        }
+        mainInputField.enabled = false;//Desactivamos el input
+       
         //Ajusta el nombre para que esté la primera letra en mayúsculas y las demás en minúsculas
         processedInput = char.ToUpper(processedInput[0]) + processedInput.Remove(0, 1);
+        
         if (valueChangedText)
         {
-            valueChangedText.GetComponent<PresentationSpeechBubble>().nuevoUsuario(processedInput);
+            valueChangedText.GetComponent<PresentationSpeechBubble>().textoBurguja("¡Hola " + processedInput + "!");
         }
         Manager.instance.setUserName(processedInput); //Ajusta el nombre de usuario
+        
     }
 }
