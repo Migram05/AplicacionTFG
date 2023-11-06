@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,10 +9,8 @@ public class DragDropScript : MonoBehaviour, IPointerDownHandler, IBeginDragHand
 {
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    //[SerializeField]
     private string nombre;
-    //[SerializeField]
-    //private Color color;
+    private int originalIndex;
     public GameObject padre;
     public string getNombre() { return nombre; }
     //public Color getColor() { return color; }
@@ -28,11 +27,13 @@ public class DragDropScript : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     }
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta;
+        float multiplier = (1920f / (float)Screen.currentResolution.width);
+        rectTransform.anchoredPosition += (eventData.delta * multiplier);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (transform.parent.tag != "ImgScroll") return;
+        originalIndex = transform.GetSiblingIndex();
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
         if (transform.parent.GetComponent<DropItemSlotScript>())
@@ -49,6 +50,7 @@ public class DragDropScript : MonoBehaviour, IPointerDownHandler, IBeginDragHand
         GameObject copia = Instantiate(this.gameObject);
         copia.transform.SetParent(this.padre.transform);
         copia.transform.localScale = Vector3.one;
+        copia.transform.SetSiblingIndex(originalIndex);
         Vector3 pos = copia.transform.localPosition; pos.z = 0f; 
         copia.transform.SetPositionAndRotation(pos, Quaternion.identity);
 
