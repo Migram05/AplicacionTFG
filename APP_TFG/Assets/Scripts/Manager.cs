@@ -48,6 +48,13 @@ public class Manager : MonoBehaviour
 
     public string[] getSavedEmotions() { return dayInformationList[selectedDay - 1].emociones; }
 
+    public void deleteData()
+    {
+        if (File.Exists(saveDataPath))
+        {
+            File.Delete(saveDataPath);
+        }
+    }
     private void saveTodayInformation() //Guarda la información del día de hoy en la lista de de dias
     {
         dayInformation info = new dayInformation();
@@ -63,6 +70,9 @@ public class Manager : MonoBehaviour
         if (username.Length == 0) //No se guarda la información si no hay un nombre de usuario válido
         {
             File.Delete(saveDataPath);
+        }
+        if (!File.Exists(saveDataPath)) //Si no hay archivo de guardado, sale de la APP
+        {
             return;
         }
         StreamWriter writer = new StreamWriter(saveDataPath);
@@ -195,6 +205,7 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(time);
         if(sceneNum == 6) //Si la escena es la última del día, guarda la información y devuelve al usuario al menú
         {
+            showTutorial = false; //Al llegar a la escena final, se desactiva el tutorial
             saveTodayInformation();
             StartCoroutine(LoadSceneDelayed(2, 7));
         }
