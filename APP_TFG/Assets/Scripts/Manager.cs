@@ -20,7 +20,9 @@ public class Manager : MonoBehaviour
     private List<string> activitiesList =  new List<string>();
     private List<string> emotionsList = new List<string>();
 
-    private string saveDataPath = "APP_SavedData/dataAPP.txt";
+    private string saveDataDirectoryName = "APP_SavedData";
+    private string saveDataFileName = "dataAPP.txt";
+    private string saveDataPath;
      struct dayInformation
     {
         public bool usable;
@@ -241,17 +243,28 @@ public class Manager : MonoBehaviour
         currentMonth = System.DateTime.Today.Month;
         currentYear = System.DateTime.Today.Year;
         numDaysInMonth = System.DateTime.DaysInMonth(currentYear, currentMonth);
-
-        hasUser = File.Exists(saveDataPath);
-        if (hasUser) //Carga la información
+        saveDataPath = saveDataDirectoryName + "/" + saveDataFileName;
+        if (Directory.Exists(saveDataDirectoryName))
         {
-            loadInformation();
-            StartCoroutine(LoadSceneDelayed(2, 7)); //Si el usuario ya está registrado, carga la escena
+            hasUser = File.Exists(saveDataPath);
+            if (hasUser) //Carga la información
+            {
+                loadInformation();
+                StartCoroutine(LoadSceneDelayed(2, 7)); //Si el usuario ya está registrado, carga la escena
+            }
+            else
+            {
+                showTutorial = true;
+                File.Create(saveDataPath);
+            }
         }
         else
         {
+            Directory.CreateDirectory(saveDataDirectoryName);
+            hasUser = false;
             showTutorial = true;
             File.Create(saveDataPath);
         }
+        
     }
 }
