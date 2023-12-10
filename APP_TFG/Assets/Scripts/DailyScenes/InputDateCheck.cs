@@ -24,7 +24,7 @@ public class InputDateCheck : MonoBehaviour
     // Llamada cuando cambia el valor del input field.
     public void ValueChangeCheck()
     {
-        string processedInput = mainInputField.text;
+        string processedInput = mainInputField.text.Trim();
         switch (mInputDateCheck)
         {
             case check.inputDayCheck:
@@ -38,7 +38,6 @@ public class InputDateCheck : MonoBehaviour
                 correctInfo = (processedInput == Manager.instance.getCurrentYearString());
                 break; 
             default:
-                Debug.Log("No se ha asignado un check a un input field");
                 break;
         }
     }

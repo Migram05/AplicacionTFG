@@ -13,7 +13,6 @@ public class DragDropScript : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     private int originalIndex;
     public GameObject padre;
     public string getNombre() { return nombre; }
-    //public Color getColor() { return color; }
 
     private void Start()
     {
