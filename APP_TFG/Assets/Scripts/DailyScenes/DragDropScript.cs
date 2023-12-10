@@ -26,8 +26,7 @@ public class DragDropScript : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     }
     public void OnDrag(PointerEventData eventData)
     {
-        float multiplier = (1920f / (float)Screen.currentResolution.width);
-        rectTransform.anchoredPosition += (eventData.delta * multiplier);
+        rectTransform.anchoredPosition += eventData.delta ;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

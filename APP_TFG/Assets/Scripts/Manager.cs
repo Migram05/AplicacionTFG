@@ -17,13 +17,10 @@ public class Manager : MonoBehaviour
     //Information to save
     private string todayGoodThings;
     private string todayBadThings;
-    private List<string> activitiesList =  new List<string>();
+    private List<string> activitiesList = new List<string>();
     private List<string> emotionsList = new List<string>();
-
-    private string saveDataDirectoryName = "APP_SavedData";
-    private string saveDataFileName = "dataAPP.txt";
     private string saveDataPath;
-     struct dayInformation
+    struct dayInformation
     {
         public bool usable;
         public string[] actividades;
@@ -46,7 +43,7 @@ public class Manager : MonoBehaviour
 
     public string getSavedBadText() { return dayInformationList[selectedDay - 1].badText; }
 
-    public string[] getSavedActivities() { return dayInformationList[selectedDay-1].actividades; }
+    public string[] getSavedActivities() { return dayInformationList[selectedDay - 1].actividades; }
 
     public string[] getSavedEmotions() { return dayInformationList[selectedDay - 1].emociones; }
 
@@ -82,9 +79,9 @@ public class Manager : MonoBehaviour
         writer.WriteLine(getCurrentMonth());
         writer.WriteLine(getCurrentYearString());
         int dayNum = 1;
-        foreach(dayInformation day in dayInformationList)
+        foreach (dayInformation day in dayInformationList)
         {
-            if(day.usable)
+            if (day.usable)
             {
                 writer.WriteLine(dayNum);
                 dayInformation info = day;
@@ -134,7 +131,7 @@ public class Manager : MonoBehaviour
                     info.emociones = emotions;
                     info.goodText = reader.ReadLine();
                     info.badText = reader.ReadLine();
-                    dayInformationList[dayNum-1] = info;
+                    dayInformationList[dayNum - 1] = info;
                 }
                 readString = reader.ReadLine();
             }
@@ -157,7 +154,7 @@ public class Manager : MonoBehaviour
     private string numberToMonthName(int n) { switch (n) { case 1: return "Enero"; case 2: return "Febrero"; case 3: return "Marzo"; case 4: return "Abril"; case 5: return "Mayo"; case 6: return "Junio"; case 7: return "Julio"; case 8: return "Agosto"; case 9: return "Septiembre"; case 10: return "Octubre"; case 11: return "Noviembre"; case 12: return "Diciembre"; default: return "MesDesconocido"; } }
 
     private string numberToDayName(int n) { switch (n) { case 1: return "Lunes"; case 2: return "Martes"; case 3: return "Miércoles"; case 4: return "Jueves"; case 5: return "Viernes"; case 6: return "Sábado"; case 0: return "Domingo"; default: return "DiaDesconocido"; } }
-    
+
     private int currentMonth;
     public string getCurrentMonth() { return numberToMonthName(currentMonth); }
 
@@ -174,16 +171,17 @@ public class Manager : MonoBehaviour
 
     private int selectedDay;
 
-    public int getSelectedDay() { return selectedDay;}
+    public int getSelectedDay() { return selectedDay; }
 
     public string getCurrentDayName() { return numberToDayName((int)System.DateTime.Today.DayOfWeek); }
 
     public bool canInteractWithButton(int day) //Método que determina si se puede hacer click en un botón o no
     {
-        return (day == currentDay || dayInformationList[day-1].usable == true);
+        return (day == currentDay || dayInformationList[day - 1].usable == true);
     }
 
-    public int getFirstDay() {
+    public int getFirstDay()
+    {
         DayOfWeek primerDia = dateTime.DayOfWeek;
         int result = (int)primerDia;
         if (result == 0) result = 7; //Ajustamos el valor para que si es 0 es decir, domingo, sea considerado el séptimo día en realidad
@@ -197,7 +195,7 @@ public class Manager : MonoBehaviour
     {
         username = newName;
     }
-    public void setUserName(string newName) 
+    public void setUserName(string newName)
     {
         username = newName;
         StartCoroutine(LoadSceneDelayed(2, 7));
@@ -205,7 +203,7 @@ public class Manager : MonoBehaviour
     public IEnumerator LoadSceneDelayed(float time, int sceneNum)
     {
         yield return new WaitForSeconds(time);
-        if(sceneNum == 6) //Si la escena es la última del día, guarda la información y devuelve al usuario al menú
+        if (sceneNum == 6) //Si la escena es la última del día, guarda la información y devuelve al usuario al menú
         {
             showTutorial = false; //Al llegar a la escena final, se desactiva el tutorial
             saveTodayInformation();
@@ -217,7 +215,7 @@ public class Manager : MonoBehaviour
     public void callendarButtonClicked(int num)
     {
         selectedDay = num;
-        if(num == currentDay) //Si el dia seleccionado es el actual, se activa la escena diaria
+        if (num == currentDay) //Si el dia seleccionado es el actual, se activa la escena diaria
         {
             StartCoroutine(LoadSceneDelayed(0, 3));
         }
@@ -231,7 +229,7 @@ public class Manager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
-        for(int i = 0; i < dayInformationList.Capacity; ++i) //Inicialización de la lista
+        for (int i = 0; i < dayInformationList.Capacity; ++i) //Inicialización de la lista
         {
             dayInformation info = new dayInformation();
             info.usable = false;
@@ -243,28 +241,19 @@ public class Manager : MonoBehaviour
         currentMonth = System.DateTime.Today.Month;
         currentYear = System.DateTime.Today.Year;
         numDaysInMonth = System.DateTime.DaysInMonth(currentYear, currentMonth);
-        saveDataPath = saveDataDirectoryName + "/" + saveDataFileName;
-        if (Directory.Exists(saveDataDirectoryName))
+        saveDataPath = Application.persistentDataPath + "dataAPP.txt";
+        if (File.Exists(saveDataPath))
         {
-            hasUser = File.Exists(saveDataPath);
-            if (hasUser) //Carga la información
-            {
-                loadInformation();
-                StartCoroutine(LoadSceneDelayed(2, 7)); //Si el usuario ya está registrado, carga la escena
-            }
-            else
-            {
-                showTutorial = true;
-                File.Create(saveDataPath);
-            }
+            hasUser = true;
+            loadInformation();
+            StartCoroutine(LoadSceneDelayed(2, 7)); //Si el usuario ya está registrado, carga la escena
         }
         else
         {
-            Directory.CreateDirectory(saveDataDirectoryName);
-            hasUser = false;
-            showTutorial = true;
             File.Create(saveDataPath);
+            showTutorial = true;
+            hasUser = false;
         }
-        
+
     }
 }
