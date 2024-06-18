@@ -35,6 +35,7 @@ public class DayPrefabScript : MonoBehaviour
     }
     public void clickedButton()
     {
+
         Manager.instance.callendarButtonClicked(buttonNumber);
     }
 }
