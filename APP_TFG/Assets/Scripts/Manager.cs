@@ -100,8 +100,8 @@ public class Manager : MonoBehaviour
                     todayEmotions += info.emociones[x] + " ";
                 }
                 writer.WriteLine(todayEmotions);
-                writer.WriteLine(info.goodText);
-                writer.WriteLine(info.badText);
+                writer.WriteLine(info.goodText.Replace('\n', ' ').Replace('\r', ' '));
+                writer.WriteLine(info.badText.Replace('\n', ' ').Replace('\r', ' '));
             }
             dayNum++;
         }
@@ -146,7 +146,6 @@ public class Manager : MonoBehaviour
     {
         saveInformation();
     }
-    //
 
     private bool showTutorial = false;
 
@@ -214,12 +213,18 @@ public class Manager : MonoBehaviour
         SceneManager.LoadScene(sceneNum);
     }
 
-    public void callendarButtonClicked(int num)
+    public void callendarButtonClicked(int num, bool overrideProceed = false)
     {
         selectedDay = num;
         if(num == currentDay) //Si el dia seleccionado es el actual, se activa la escena diaria
         {
-            StartCoroutine(LoadSceneDelayed(0, 3));
+            if (todayInformationSaved() && !overrideProceed)
+            {
+                GameObject warning = GameObject.Find("WarningOverride");
+                warning.SetActive(true);
+                warning.GetComponentInChildren<WarningOverride>().setNum(num);
+            }
+            else StartCoroutine(LoadSceneDelayed(0, 3));
         }
         else //Sino, se muestra un resumen del día
         {
